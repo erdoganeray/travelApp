@@ -1,0 +1,115 @@
+# Travel App Project Rules
+
+## Code Structure and Organization
+
+### Frontend (React Native)
+- Use functional components with hooks
+- Follow component-based architecture
+- Keep components small and reusable
+- Use proper naming conventions (PascalCase for components, camelCase for functions)
+- Implement proper type checking with PropTypes or TypeScript
+- Organize styles using StyleSheet
+- Use constants for colors, dimensions, and other theme values
+
+### Backend (Node.js + Express)
+- Follow MVC (Model-View-Controller) pattern
+- Use middleware for common functionalities
+- Implement proper error handling
+- Use async/await for asynchronous operations
+- Keep routes organized and modular
+- Use environment variables for sensitive data
+
+### Database (MongoDB)
+- Use clear and consistent naming for collections
+- Implement proper indexing for frequently queried fields
+- Follow schema design best practices
+- Use data validation
+- Implement proper error handling for database operations
+
+## Coding Standards
+
+### General
+- Use meaningful variable and function names
+- Write self-documenting code
+- Keep functions small and focused
+- Follow DRY (Don't Repeat Yourself) principle
+- Use proper indentation (2 spaces)
+- Add comments only when necessary
+- Use English for all code and comments
+
+### Git Practices
+- Write clear commit messages
+- Use feature branches
+- Keep commits small and focused
+- Follow conventional commits format
+- No direct commits to main/master branch
+- Review all code changes through pull requests
+
+## Features Implementation Guidelines
+
+### Main Page Section
+- Implement card components for Cities, Places, and Events
+- Use proper navigation handling for card interactions
+- Implement favorite functionality with proper state management
+- Ensure smooth integration with travel plans
+
+### Travel Plan Section
+- Implement form validation for required fields
+- Use proper date handling libraries
+- Integrate maps functionality efficiently
+- Implement AI integration for plan generation
+- Ensure proper error handling for plan creation
+
+### Profile Section
+- Implement secure user authentication
+- Handle user data privacy
+- Implement proper state management for user preferences
+
+## Performance Guidelines
+- Implement proper image optimization
+- Use lazy loading where appropriate
+- Implement proper caching strategies
+- Monitor and optimize API calls
+- Implement proper error boundaries
+
+## Security Rules
+- Implement proper authentication and authorization
+- Sanitize all user inputs
+- Use secure communication protocols
+- Protect sensitive data
+- Implement rate limiting
+- Use proper session management
+
+## Testing Requirements
+- Write unit tests for components
+- Implement integration tests
+- Test all API endpoints
+- Implement proper error case testing
+- Maintain good test coverage
+
+## Documentation
+- Maintain up-to-date API documentation
+- Document all environment setup steps
+- Keep README files current
+- Document all configuration options
+- Include setup instructions for local development
+
+## Deployment
+- Use proper CI/CD practices
+- Implement staging environment
+- Use proper versioning
+- Implement proper backup strategies
+- Monitor application performance
+
+## Accessibility
+- Follow WCAG guidelines
+- Implement proper keyboard navigation
+- Use semantic HTML
+- Provide proper alt texts
+- Ensure proper color contrast
+
+## Internationalization
+- Support multiple languages (Turkish and English initially)
+- Use proper i18n implementation
+- Handle right-to-left languages if needed
+- Use proper date and number formatting 

@@ -1,0 +1,13 @@
+- seyahat planlarına uygulama içinde başka kullanıcılar eklenebilecek
+
+- ai ile chat edilebilir
+
+- booking uygulamaları olacak
+
+- seyahat planlamalarında uçak, otel, araç kiralama vb. bütçesi olan durumların bütçeleri gösterilebilir
+- bütçe tercihi gelebilir
+
+- seyahat planlamasında detay verilmeden discover özelliği
+
+- seyahat planlamasında herhangi bir saat aralığında ya da herhangi bir gün aralığında 
+"herhangi bir plan eklemesi olmayacak" özelliği
