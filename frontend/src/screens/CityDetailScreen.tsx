@@ -22,16 +22,43 @@ const CityDetailScreen: React.FC<Props> = ({ route }) => {
   // Mock data - will be replaced with API call
   const cityData = {
     id: cityId,
-    name: 'Istanbul',
-    description: 'A city where East meets West, rich in history and culture.',
-    image: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
-    population: '15.46 million',
+    name: cityId === '1' ? 'Istanbul' : 
+          cityId === '2' ? 'Ankara' : 
+          cityId === '3' ? 'Izmir' : 
+          cityId === '4' ? 'Antalya' : 'Unknown City',
+    description: cityId === '1' ? 'A city where East meets West, rich in history and culture.' :
+                 cityId === '2' ? 'The capital city of Turkey, known for its modern architecture and government institutions.' :
+                 cityId === '3' ? 'A beautiful coastal city known for its seafront promenade and ancient ruins.' :
+                 cityId === '4' ? 'A resort city with beautiful beaches and rich history along the Turkish Riviera.' :
+                 'City description not available.',
+    image: cityId === '1' ? 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80' :
+           cityId === '2' ? 'https://images.unsplash.com/photo-1589030343991-69ea1433b941?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80' :
+           cityId === '3' ? 'https://images.unsplash.com/photo-1589030343991-69ea1433b941?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80' :
+           cityId === '4' ? 'https://images.unsplash.com/photo-1589030343991-69ea1433b941?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80' :
+           'https://via.placeholder.com/1170x780',
+    population: cityId === '1' ? '15.46 million' :
+                cityId === '2' ? '5.66 million' :
+                cityId === '3' ? '4.37 million' :
+                cityId === '4' ? '2.54 million' :
+                'Population data not available',
     country: 'Turkey',
-    topPlaces: [
+    topPlaces: cityId === '1' ? [
       { id: '1', name: 'Blue Mosque', type: 'Historical' },
       { id: '2', name: 'Hagia Sophia', type: 'Historical' },
       { id: '3', name: 'Grand Bazaar', type: 'Shopping' },
-    ],
+    ] : cityId === '2' ? [
+      { id: '4', name: 'Anıtkabir', type: 'Historical' },
+      { id: '5', name: 'Kocatepe Mosque', type: 'Historical' },
+      { id: '6', name: 'Ankara Castle', type: 'Historical' },
+    ] : cityId === '3' ? [
+      { id: '7', name: 'Kemeraltı', type: 'Shopping' },
+      { id: '8', name: 'Clock Tower', type: 'Historical' },
+      { id: '9', name: 'Kordon', type: 'Entertainment' },
+    ] : cityId === '4' ? [
+      { id: '10', name: 'Kaleiçi', type: 'Historical' },
+      { id: '11', name: 'Düden Waterfalls', type: 'Nature' },
+      { id: '12', name: 'Antalya Museum', type: 'Museum' },
+    ] : [],
   };
 
   return (
@@ -115,18 +142,21 @@ const styles = StyleSheet.create({
   },
   headerContent: {
     position: 'absolute',
-    bottom: SIZES.padding,
+    bottom: SIZES.padding * 2,
     left: SIZES.padding,
     right: SIZES.padding,
   },
   name: {
     ...FONTS.h1,
     color: COLORS.white,
-    marginBottom: SIZES.base,
+    marginBottom: SIZES.padding,
+    fontSize: 32,
   },
   country: {
     ...FONTS.h3,
     color: COLORS.white,
+    fontSize: 18,
+    opacity: 0.9,
   },
   content: {
     padding: SIZES.padding,
@@ -142,7 +172,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   infoText: {
-    ...FONTS.body2,
     marginLeft: SIZES.base,
     color: COLORS.text,
   },
@@ -172,15 +201,18 @@ const styles = StyleSheet.create({
   },
   placeInfo: {
     flex: 1,
+    marginRight: SIZES.padding,
   },
   placeName: {
     ...FONTS.h3,
     color: COLORS.text,
-    marginBottom: SIZES.base / 2,
+    marginBottom: SIZES.padding,
+    fontSize: 16,
   },
   placeType: {
     ...FONTS.body3,
-    color: COLORS.textLight,
+    color: COLORS.text,
+    opacity: 0.7,
   },
 });
 

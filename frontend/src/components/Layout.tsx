@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform, ViewStyle, TextStyle } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS, SIZES, FONTS } from '../constants/theme';
@@ -60,50 +60,67 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
     flexDirection: 'row',
     backgroundColor: COLORS.background,
-  },
+  } as ViewStyle,
   sidebar: {
     width: 250,
     backgroundColor: COLORS.white,
     borderRightWidth: 1,
     borderRightColor: COLORS.border,
     padding: SIZES.padding,
-    height: '100%',
-  },
+    ...(Platform.OS === 'web' ? {
+      height: '100vh',
+      position: 'fixed',
+      overflowY: 'auto',
+    } : {
+      height: '100%',
+      position: 'absolute',
+    }),
+    left: 0,
+    top: 0,
+    zIndex: 1000,
+  } as ViewStyle,
   logo: {
     ...FONTS.h2,
     color: COLORS.primary,
-    textAlign: 'center',
+    textAlign: 'center' as const,
     marginBottom: SIZES.padding * 2,
-  },
+  } as TextStyle,
   navItems: {
     marginTop: SIZES.padding,
-  },
+  } as ViewStyle,
   navItem: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: SIZES.padding,
     marginBottom: SIZES.base,
     borderRadius: SIZES.radius,
-  },
+  } as ViewStyle,
   activeNavItem: {
     backgroundColor: COLORS.primary,
-  },
+  } as ViewStyle,
   navText: {
     ...FONTS.body2,
     color: COLORS.primary,
     marginLeft: SIZES.base,
-  },
+  } as TextStyle,
   activeNavText: {
     color: COLORS.white,
-  },
+  } as TextStyle,
   content: {
     flex: 1,
-  },
-});
+    marginLeft: 250,
+    ...(Platform.OS === 'web' ? {
+      minHeight: '100vh',
+      overflowY: 'auto',
+    } : {
+      height: '100%',
+    }),
+  } as ViewStyle,
+};
 
 export default Layout;
