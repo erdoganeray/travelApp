@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, Platform, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import CardSection from '../components/CardSection';
@@ -45,22 +45,27 @@ const HomeScreen = () => {
   ];
 
   return (
-    <ScrollView style={styles.container}>
-      <CardSection
-        title="Popular Cities"
-        data={cities}
-        onCardPress={handleCityPress}
-      />
-      <CardSection
-        title="Popular Places"
-        data={places}
-        onCardPress={handlePlacePress}
-      />
-      <CardSection
-        title="Upcoming Events"
-        data={events}
-        onCardPress={handleEventPress}
-      />
+    <ScrollView 
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
+      <View style={styles.content}>
+        <CardSection
+          title="Popular Cities"
+          data={cities}
+          onPress={handleCityPress}
+        />
+        <CardSection
+          title="Popular Places"
+          data={places}
+          onPress={handlePlacePress}
+        />
+        <CardSection
+          title="Upcoming Events"
+          data={events}
+          onPress={handleEventPress}
+        />
+      </View>
     </ScrollView>
   );
 };
@@ -69,6 +74,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background,
+  },
+  contentContainer: {
+    flexGrow: 1,
+    paddingBottom: 20,
+  },
+  content: {
+    flex: 1,
+    maxWidth: Platform.OS === 'web' 
+      ? Math.min(Dimensions.get('window').width, 1200)
+      : Dimensions.get('window').width,
+    alignSelf: 'center',
+    width: '100%',
+    paddingHorizontal: Platform.OS === 'web' ? 20 : 10,
   },
 });
 

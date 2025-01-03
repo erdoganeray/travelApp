@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -31,8 +32,22 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const HomeStack = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: true,
+        headerStyle: Platform.select({
+          web: { height: 60 },
+          default: undefined
+        })
+      }}
+    >
+      <Stack.Screen 
+        name="Home" 
+        component={HomeScreen}
+        options={{
+          headerTitle: 'Travel App',
+        }}
+      />
       <Stack.Screen name="CityDetail" component={CityDetailScreen} />
       <Stack.Screen name="PlaceDetail" component={PlaceDetailScreen} />
       <Stack.Screen name="EventDetail" component={EventDetailScreen} />
@@ -42,7 +57,12 @@ const HomeStack = () => {
 
 const AppNavigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      documentTitle={{
+        formatter: (options, route) =>
+          `${options?.title ?? route?.name} - Travel App`,
+      }}
+    >
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -58,15 +78,29 @@ const AppNavigator = () => {
 
             return <Ionicons name={iconName} size={size} color={color} />;
           },
+          tabBarStyle: Platform.select({
+            web: { paddingBottom: 10, height: 60 },
+            default: undefined
+          })
         })}
       >
         <Tab.Screen 
           name="HomeTab" 
-          component={HomeStack} 
-          options={{ headerShown: false, title: 'Home' }}
+          component={HomeStack}
+          options={{ 
+            headerShown: false,
+            title: 'Home'
+          }} 
         />
-        <Tab.Screen name="TravelPlans" component={TravelPlanScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
+        <Tab.Screen 
+          name="TravelPlans" 
+          component={TravelPlanScreen}
+          options={{ title: 'Travel Plans' }} 
+        />
+        <Tab.Screen 
+          name="Profile" 
+          component={ProfileScreen} 
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
