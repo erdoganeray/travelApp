@@ -1,13 +1,24 @@
 const createExpoWebpackConfigAsync = require('@expo/webpack-config');
 
 module.exports = async function (env, argv) {
-  const config = await createExpoWebpackConfigAsync(env, argv);
+  const config = await createExpoWebpackConfigAsync({
+    ...env,
+    babel: {
+      dangerouslyAddModulePathsToTranspile: ['@expo/vector-icons']
+    }
+  }, argv);
   
-  // Add polyfills for node modules
+  // Add polyfills
   if (!config.resolve.fallback) {
     config.resolve.fallback = {};
   }
-  config.resolve.fallback.crypto = require.resolve('crypto-browserify');
+  
+  config.resolve.fallback = {
+    ...config.resolve.fallback,
+    crypto: require.resolve('crypto-browserify'),
+    stream: require.resolve('stream-browserify'),
+    vm: require.resolve('vm-browserify'),
+  };
   
   return config;
 }; 

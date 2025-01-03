@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
+import Layout from '../components/Layout';
 import { COLORS, SIZES, FONTS } from '../constants/theme';
 
 interface TravelPlan {
@@ -50,145 +51,147 @@ const TravelPlanScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <TouchableOpacity
-        style={styles.newPlanButton}
-        onPress={() => setShowNewPlan(!showNewPlan)}
-      >
-        <Ionicons name="add-circle" size={24} color={COLORS.white} />
-        <Text style={styles.newPlanButtonText}>Create New Plan</Text>
-      </TouchableOpacity>
+    <Layout>
+      <ScrollView style={styles.container}>
+        <TouchableOpacity
+          style={styles.newPlanButton}
+          onPress={() => setShowNewPlan(!showNewPlan)}
+        >
+          <Ionicons name="add-circle" size={24} color={COLORS.white} />
+          <Text style={styles.newPlanButtonText}>Create New Plan</Text>
+        </TouchableOpacity>
 
-      {showNewPlan && (
-        <View style={styles.formContainer}>
-          <Text style={styles.formTitle}>New Travel Plan</Text>
-          
-          {/* Required Fields */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Start Date *</Text>
+        {showNewPlan && (
+          <View style={styles.formContainer}>
+            <Text style={styles.formTitle}>New Travel Plan</Text>
+            
+            {/* Required Fields */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Start Date *</Text>
+              <TouchableOpacity
+                style={styles.dateInput}
+                onPress={() => setShowStartDate(true)}
+              >
+                <Text>
+                  {newPlan.startDate
+                    ? newPlan.startDate.toLocaleDateString()
+                    : 'Select date'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>End Date *</Text>
+              <TouchableOpacity
+                style={styles.dateInput}
+                onPress={() => setShowEndDate(true)}
+              >
+                <Text>
+                  {newPlan.endDate
+                    ? newPlan.endDate.toLocaleDateString()
+                    : 'Select date'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Start City *</Text>
+              <TextInput
+                style={styles.input}
+                value={newPlan.startCity}
+                onChangeText={(text) => setNewPlan({ ...newPlan, startCity: text })}
+                placeholder="Enter start city"
+              />
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>End City *</Text>
+              <TextInput
+                style={styles.input}
+                value={newPlan.endCity}
+                onChangeText={(text) => setNewPlan({ ...newPlan, endCity: text })}
+                placeholder="Enter end city"
+              />
+            </View>
+
+            {/* Optional Fields */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Accommodation</Text>
+              <TextInput
+                style={styles.input}
+                value={newPlan.accommodation}
+                onChangeText={(text) =>
+                  setNewPlan({ ...newPlan, accommodation: text })
+                }
+                placeholder="Hotel, Airbnb, etc."
+              />
+            </View>
+
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Number of Participants</Text>
+              <TextInput
+                style={styles.input}
+                value={newPlan.participants?.toString()}
+                onChangeText={(text) =>
+                  setNewPlan({ ...newPlan, participants: parseInt(text) || 1 })
+                }
+                keyboardType="numeric"
+                placeholder="1"
+              />
+            </View>
+
             <TouchableOpacity
-              style={styles.dateInput}
-              onPress={() => setShowStartDate(true)}
+              style={styles.createButton}
+              onPress={handleCreatePlan}
             >
-              <Text>
-                {newPlan.startDate
-                  ? newPlan.startDate.toLocaleDateString()
-                  : 'Select date'}
-              </Text>
+              <Text style={styles.createButtonText}>Create Plan</Text>
             </TouchableOpacity>
           </View>
+        )}
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>End Date *</Text>
-            <TouchableOpacity
-              style={styles.dateInput}
-              onPress={() => setShowEndDate(true)}
-            >
-              <Text>
-                {newPlan.endDate
-                  ? newPlan.endDate.toLocaleDateString()
-                  : 'Select date'}
+        {/* Existing Plans */}
+        <View style={styles.plansList}>
+          <Text style={styles.sectionTitle}>Your Travel Plans</Text>
+          {plans.map((plan) => (
+            <View key={plan.id} style={styles.planCard}>
+              <Text style={styles.planTitle}>
+                {plan.startCity} to {plan.endCity}
               </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Start City *</Text>
-            <TextInput
-              style={styles.input}
-              value={newPlan.startCity}
-              onChangeText={(text) => setNewPlan({ ...newPlan, startCity: text })}
-              placeholder="Enter start city"
-            />
-          </View>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>End City *</Text>
-            <TextInput
-              style={styles.input}
-              value={newPlan.endCity}
-              onChangeText={(text) => setNewPlan({ ...newPlan, endCity: text })}
-              placeholder="Enter end city"
-            />
-          </View>
-
-          {/* Optional Fields */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Accommodation</Text>
-            <TextInput
-              style={styles.input}
-              value={newPlan.accommodation}
-              onChangeText={(text) =>
-                setNewPlan({ ...newPlan, accommodation: text })
-              }
-              placeholder="Hotel, Airbnb, etc."
-            />
-          </View>
-
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Number of Participants</Text>
-            <TextInput
-              style={styles.input}
-              value={newPlan.participants?.toString()}
-              onChangeText={(text) =>
-                setNewPlan({ ...newPlan, participants: parseInt(text) || 1 })
-              }
-              keyboardType="numeric"
-              placeholder="1"
-            />
-          </View>
-
-          <TouchableOpacity
-            style={styles.createButton}
-            onPress={handleCreatePlan}
-          >
-            <Text style={styles.createButtonText}>Create Plan</Text>
-          </TouchableOpacity>
+              <Text style={styles.planDates}>
+                {plan.startDate.toLocaleDateString()} -{' '}
+                {plan.endDate.toLocaleDateString()}
+              </Text>
+            </View>
+          ))}
         </View>
-      )}
 
-      {/* Existing Plans */}
-      <View style={styles.plansList}>
-        <Text style={styles.sectionTitle}>Your Travel Plans</Text>
-        {plans.map((plan) => (
-          <View key={plan.id} style={styles.planCard}>
-            <Text style={styles.planTitle}>
-              {plan.startCity} to {plan.endCity}
-            </Text>
-            <Text style={styles.planDates}>
-              {plan.startDate.toLocaleDateString()} -{' '}
-              {plan.endDate.toLocaleDateString()}
-            </Text>
-          </View>
-        ))}
-      </View>
+        {showStartDate && (
+          <DateTimePicker
+            value={newPlan.startDate || new Date()}
+            mode="date"
+            onChange={(event: DateTimePickerEvent, date?: Date) => {
+              setShowStartDate(false);
+              if (date) {
+                setNewPlan({ ...newPlan, startDate: date });
+              }
+            }}
+          />
+        )}
 
-      {showStartDate && (
-        <DateTimePicker
-          value={newPlan.startDate || new Date()}
-          mode="date"
-          onChange={(event: DateTimePickerEvent, date?: Date) => {
-            setShowStartDate(false);
-            if (date) {
-              setNewPlan({ ...newPlan, startDate: date });
-            }
-          }}
-        />
-      )}
-
-      {showEndDate && (
-        <DateTimePicker
-          value={newPlan.endDate || new Date()}
-          mode="date"
-          onChange={(event: DateTimePickerEvent, date?: Date) => {
-            setShowEndDate(false);
-            if (date) {
-              setNewPlan({ ...newPlan, endDate: date });
-            }
-          }}
-        />
-      )}
-    </ScrollView>
+        {showEndDate && (
+          <DateTimePicker
+            value={newPlan.endDate || new Date()}
+            mode="date"
+            onChange={(event: DateTimePickerEvent, date?: Date) => {
+              setShowEndDate(false);
+              if (date) {
+                setNewPlan({ ...newPlan, endDate: date });
+              }
+            }}
+          />
+        )}
+      </ScrollView>
+    </Layout>
   );
 };
 
